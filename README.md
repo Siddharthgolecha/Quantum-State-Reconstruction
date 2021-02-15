@@ -1,2 +1,38 @@
-# Quantum-State-Reconstruction
-Reconstructing randomly generated Quantum state using Swap test
+# Reconstructing randomly generated Quantum state using Swap test
+
+## Swap test
+The [Swap test](https://en.wikipedia.org/wiki/Swap_test) is a simple quantum circuit which, given two states, allows to compute how much do they differ from each other.
+
+![Swap Test Circuit](https://upload.wikimedia.org/wikipedia/commons/d/d6/Quantum-swap-test-circuit-correct.png)
+
+Let's dive a bit into calculations!
+<br>
+<br>
+
+Consider two states: ![|phi> and |psi>](https://latex.codecogs.com/png.latex?%5Clarge%20%7B%5Ccolor%7BGreen%7D%7B%5Cdisplaystyle%20%7C%5Cphi%20%5Crangle%20%7D%20%5C%20and%5C%20%7B%5Cdisplaystyle%20%7C%5Cpsi%20%5Crangle%7D%7D) . The state of the system at the beginning of the protocol is ![|0,phi,psi>](https://latex.codecogs.com/png.latex?%5Clarge%20%7B%5Ccolor%7BGreen%7D%7B%5Cdisplaystyle%20%7C0%2C%5Cphi%20%2C%5Cpsi%20%5Crangle%20%7D%7D).
+
+After applying the Swap test and before measuring the state of the circuit is
+
+![final state formula](https://latex.codecogs.com/png.latex?%5Clarge%20%7B%5Ccolor%7BGreen%7D%7B%5Cdisplaystyle%20%7B%5Cfrac%20%7B1%7D%7B2%7D%7D%28%7C0%2C%5Cphi%20%2C%5Cpsi%20%5Crangle%20+%7C1%2C%5Cphi%20%2C%5Cpsi%20%5Crangle%20+%7C0%2C%5Cpsi%20%2C%5Cphi%20%5Crangle%20-%7C1%2C%5Cpsi%20%2C%5Cphi%20%5Crangle%20%29%3D%7B%5Cfrac%20%7B1%7D%7B2%7D%7D%7C0%5Crangle%20%28%7C%5Cphi%20%2C%5Cpsi%20%5Crangle%20+%7C%5Cpsi%20%2C%5Cphi%20%5Crangle%20%29+%7B%5Cfrac%20%7B1%7D%7B2%7D%7D%7C1%5Crangle%20%28%7C%5Cphi%20%2C%5Cpsi%20%5Crangle%20-%7C%5Cpsi%20%2C%5Cphi%20%5Crangle%20%29%7D%7D)
+
+The Measurement gate on the first qubit ensures that it's 0 with a probability of
+![|0> Measurement probability](https://latex.codecogs.com/png.latex?%5Clarge%20%7B%5Ccolor%7BGreen%7D%7B%5Cdisplaystyle%20P%28%7B%5Ctext%7BFirst%20qubit%7D%7D%3D0%29%3D%7B%5Cfrac%20%7B1%7D%7B2%7D%7D%7B%5CBig%20%28%7D%5Clangle%20%5Cphi%20%7C%5Clangle%20%5Cpsi%20%7C+%5Clangle%20%5Cpsi%20%7C%5Clangle%20%5Cphi%20%7C%7B%5CBig%20%29%7D%7B%5Cfrac%20%7B1%7D%7B2%7D%7D%7B%5CBig%20%28%7D%7C%5Cphi%20%5Crangle%20%7C%5Cpsi%20%5Crangle%20+%7C%5Cpsi%20%5Crangle%20%7C%5Cphi%20%5Crangle%20%7B%5CBig%20%29%7D%3D%7B%5Cfrac%20%7B1%7D%7B2%7D%7D+%7B%5Cfrac%20%7B1%7D%7B2%7D%7D%7B%7C%5Clangle%20%5Cpsi%20%7C%5Cphi%20%5Crangle%20%7C%7D%5E%7B2%7D%7D%7D)
+
+when measured. If  ![|phi> and |psi>](https://latex.codecogs.com/png.latex?%5Clarge%20%7B%5Ccolor%7BGreen%7D%7B%5Cdisplaystyle%20%7C%5Cphi%20%5Crangle%20%7D%20%5C%20and%5C%20%7B%5Cdisplaystyle%20%7C%5Cpsi%20%5Crangle%7D%7D)  are orthogonal ![Orthogonal measurement](https://latex.codecogs.com/png.latex?%5Clarge%20%7B%5Ccolor%7BGreen%7D%7B%5Cdisplaystyle%20%28%7B%7C%5Clangle%20%5Cpsi%20%7C%5Cphi%20%5Crangle%20%7C%7D%5E%7B2%7D%3D0%29%7D%7D), then the probability that 0 is measured is 0.5. If the states are equal ![Same measurement](https://latex.codecogs.com/png.latex?%5Clarge%20%7B%5Ccolor%7BGreen%7D%7B%5Cdisplaystyle%20%28%7B%7C%5Clangle%20%5Cpsi%20%7C%5Cphi%20%5Crangle%20%7C%7D%5E%7B2%7D%3D1%29%7D%7D), then the probability that 0 is measured is 1. 
+
+## Parameters needed to be changed
+
+![U3 gate](https://latex.codecogs.com/png.latex?%5Clarge%20%7B%5Ccolor%7BGreen%7DU3%28%5Ctheta%2C%5Cphi%2C%5Clambda%29%3D%5Cbegin%7Bpmatrix%7D%5Ccos%28%5Cfrac%7B%5Ctheta%7D%7B2%7D%29%20%26%20-e%5E%7Bi%5Clambda%7D%5Csin%28%5Cfrac%7B%5Ctheta%7D%7B2%7D%29%20%5C%5C%20e%5E%7Bi%5Cphi%7D%5Csin%28%5Cfrac%7B%5Ctheta%7D%7B2%7D%29%20%26%20e%5E%7Bi%28%5Cphi+%5Clambda%29%7D%5Ccos%28%5Cfrac%7B%5Ctheta%7D%7B2%7D%29%5Cend%7Bpmatrix%7D%7D)
+![1](https://latex.codecogs.com/png.latex?%5Clarge%20%7B%5Ccolor%7BGreen%7D%20U3%7B%7C%5Cphi%5Crangle%7D%20%3D%20%7B%5Cbegin%7Bpmatrix%7D%5Ccos%28%5Cfrac%7B%5Ctheta_%7B1%7D%7D%7B2%7D%29%20%26%20-e%5E%7Bi%5Clambda_%7B1%7D%7D%5Csin%28%5Cfrac%7B%5Ctheta_%7B1%7D%7D%7B2%7D%29%20%5C%5C%20e%5E%7Bi%5Cphi_%7B1%7D%7D%5Csin%28%5Cfrac%7B%5Ctheta_%7B1%7D%7D%7B2%7D%29%20%26%20e%5E%7Bi%28%5Cphi_%7B1%7D+%5Clambda_%7B1%7D%29%7D%5Ccos%28%5Cfrac%7B%5Ctheta_%7B1%7D%7D%7B2%7D%29%5Cend%7Bpmatrix%7D%20%5Cbegin%7Bpmatrix%7D1%20%5C%5C%200%5Cend%7Bpmatrix%7D%7D%20%5Cbreak%20%3D%20%5Cbegin%7Bpmatrix%7D%5Ccos%28%5Cfrac%7B%5Ctheta_%7B1%7D%7D%7B2%7D%29%20%5C%5C%20e%5E%7Bi%5Cphi_%7B1%7D%7D%5Csin%28%5Cfrac%7B%5Ctheta_%7B1%7D%7D%7B2%7D%29%20%5Cend%7Bpmatrix%7D%20%7D)
+![2](https://latex.codecogs.com/png.latex?%5Clarge%20%7B%5Ccolor%7BGreen%7D%20U3%7B%7C%5Cpsi%5Crangle%7D%20%3D%20%7B%5Cbegin%7Bpmatrix%7D%5Ccos%28%5Cfrac%7B%5Ctheta_%7B2%7D%7D%7B2%7D%29%20%26%20-e%5E%7Bi%5Clambda_%7B2%7D%7D%5Csin%28%5Cfrac%7B%5Ctheta_%7B2%7D%7D%7B2%7D%29%20%5C%5C%20e%5E%7Bi%5Cphi_%7B2%7D%7D%5Csin%28%5Cfrac%7B%5Ctheta_%7B2%7D%7D%7B2%7D%29%20%26%20e%5E%7Bi%28%5Cphi_%7B2%7D+%5Clambda_%7B2%7D%29%7D%5Ccos%28%5Cfrac%7B%5Ctheta_%7B2%7D%7D%7B2%7D%29%5Cend%7Bpmatrix%7D%20%5Cbegin%7Bpmatrix%7D1%20%5C%5C%200%5Cend%7Bpmatrix%7D%7D%20%5Cbreak%20%3D%20%5Cbegin%7Bpmatrix%7D%5Ccos%28%5Cfrac%7B%5Ctheta_%7B2%7D%7D%7B2%7D%29%20%5C%5C%20e%5E%7Bi%5Cphi_%7B1%7D%7D%5Csin%28%5Cfrac%7B%5Ctheta_%7B2%7D%7D%7B2%7D%29%20%5Cend%7Bpmatrix%7D%20%7D)
+![3](https://latex.codecogs.com/png.latex?%5Clarge%20%7B%5Ccolor%7BGreen%7D%20%7B%7C%5Clangle%20%5Cpsi%20%7C%5Cphi%20%5Crangle%20%7C%7D%5E%7B2%7D%20%5C%5C%20%3D%20%7B%5CBig%5Crvert%5Cbegin%7Bpmatrix%7D%5Ccos%28%5Cfrac%7B%5Ctheta_%7B2%7D%7D%7B2%7D%29%20%26%20e%5E%7Bi%5Cphi_%7B2%7D%7D%5Csin%28%5Cfrac%7B%5Ctheta_%7B2%7D%7D%7B2%7D%29%20%5Cend%7Bpmatrix%7D%5Cbegin%7Bpmatrix%7D%5Ccos%28%5Cfrac%7B%5Ctheta_%7B1%7D%7D%7B2%7D%29%20%5C%5C%20e%5E%7Bi%5Cphi_%7B1%7D%7D%5Csin%28%5Cfrac%7B%5Ctheta_%7B1%7D%7D%7B2%7D%29%20%5Cend%7Bpmatrix%7D%5CBig%5Clvert%7D%5E2%20%7D)
+![4](https://latex.codecogs.com/png.latex?%5Clarge%20%7B%5Ccolor%7BGreen%7D%20%7B%7C%5Clangle%20%5Cpsi%20%7C%5Cphi%20%5Crangle%20%7C%7D%5E%7B2%7D%20%5C%5C%20%3D%20%7B%5CBig%5Crvert%5Ccos%28%5Cfrac%7B%5Ctheta_%7B2%7D%7D%7B2%7D%29%5Ccos%28%5Cfrac%7B%5Ctheta_%7B1%7D%7D%7B2%7D%29%20+%20e%5E%7Bi%28%7B%5Cphi_%7B2%7D+%5Cphi_%7B1%7D%7D%29%7D%5Csin%28%5Cfrac%7B%5Ctheta_%7B2%7D%7D%7B2%7D%29%5Csin%28%5Cfrac%7B%5Ctheta_%7B1%7D%7D%7B2%7D%29%5CBig%5Clvert%7D%5E2%20%7D)
+![5](https://latex.codecogs.com/png.latex?%5Clarge%20%7B%5Ccolor%7BGreen%7D%20%7B%7C%5Clangle%20%5Cpsi%20%7C%5Cphi%20%5Crangle%20%7C%7D%5E%7B2%7D%20%5C%5C%20%3D%20%5Ccos%5E2%28%5Cfrac%7B%5Ctheta_%7B2%7D%7D%7B2%7D%29%5Ccos%5E2%28%5Cfrac%7B%5Ctheta_%7B1%7D%7D%7B2%7D%29%20+%20%5Csin%5E2%28%5Cfrac%7B%5Ctheta_%7B2%7D%7D%7B2%7D%29%5Csin%5E2%28%5Cfrac%7B%5Ctheta_%7B1%7D%7D%7B2%7D%29%20%5C%20%5C%20%5C%20%5B%5Crvert%20%7Be%5E%7Bi%28%7B%5Cphi_%7B2%7D+%5Cphi_%7B1%7D%7D%29%7D%5Clvert%20%5E%202%20%3D%201%7D%5D%20%7D)
+
+Hence only 1 parameter ![theta](https://latex.codecogs.com/png.latex?%5Clarge%20%7B%5Ccolor%7BGreen%7D%20%5Ctheta%20%7D) needs to be changed. So when ![theta1=theta2](https://latex.codecogs.com/png.latex?%5Clarge%20%7B%5Ccolor%7BGreen%7D%20%5Ctheta_%7B1%7D%20%3D%20%5Ctheta_%7B2%7D%20%7D)
+
+![6](https://latex.codecogs.com/png.latex?%5Clarge%20%7B%5Ccolor%7BGreen%7D%20%5Cfrac%7B1%7D%7B2%7D%20+%20%5Cfrac%7B1%7D%7B2%7D%7B%7B%7C%5Clangle%20%5Cpsi%20%7C%5Cphi%20%5Crangle%20%7C%7D%5E%7B2%7D%20%3D%20%5Cfrac%7B1%7D%7B2%7D%20+%20%5Cfrac%7B1%7D%7B2%7D.2%28%5Ccos%5E2%28%5Cfrac%7B%5Ctheta_%7B2%7D%7D%7B2%7D%29%20+%20%5Csin%5E2%28%5Cfrac%7B%5Ctheta_%7B2%7D%7D%7B2%7D%29%29%7D%20%3D%201%20%7D)
+
+To reproduce a general |1> state, I calculated the error of the current psi state and phi state using swap test. And then made 2 states from the current state by either adding or subtracting the error*pi value to current theta value. The errors of both the new states were calculated and whichever was found to be the least, it was chosen as the current state and the error was appended to the history list. It resembles the classical Linear Regression Machine Learning graph
+
+![Swap test error vs epochs Graph](https://github.com/Siddharthgolecha/Quantum-State-Reconstruction/blob/main/Swap%20test%20error%20graph%20vs%20epochs.png)
